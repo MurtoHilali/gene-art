@@ -2,16 +2,11 @@ import numpy as np
 from PIL import Image
 import math
 
-## NZ_CP053416.1 Salmonella bongori strain 85-0051 chromosome, complete genome
-
 ## open genome txt file as string 'seq'
-with open(r"\s_bongori.txt", 'r') as file:
+with open(r"~\s_bongori.txt", 'r') as file:
     seq = file.read().replace('\n','')
 
-## get string length (put inside of dimensions?)
-seq_length = len(seq)
-
-## RGB colours for each base
+##RGB colours for each base
 colours = {
     "A":[98, 60, 234],
     "T":[136, 90, 90],
@@ -20,18 +15,22 @@ colours = {
 }
 
 ## function to return the two closest integer factors of seq_length
-def dimensions(seq_length):
+## now if there is a prime number of nucleotides in genome 
+## the last one is dropped to make the new seq
+def dimensions(seq):
+    seq_length = len(seq)
     a = int(math.sqrt(seq_length))
     while seq_length % a != 0:
         a += 1
     if a == seq_length:
-        return "Is prime"
-        ## in this case, should I remove a nucleotide and try again
-        ## repeatedly? or prompt for a different sequence
+        vals = [dimensions(seq[:-1])[0], dimensions(seq[:-1])[1], seq[:-1]]
+        return vals
     else:
-        return a, int(seq_length / a)
+        vals = [a, int(seq_length / a)]
+        return vals
 
-## generates array with dimensions from dimensions() containing RGB values from colour {}
+
+## generates array with dimensions from dimensions() containing RGB values from colours {}
 def generate(h, w, data):
     for k in range(w):
         data[0,k] = colours[seq[k]]
@@ -45,8 +44,11 @@ def generate(h, w, data):
     return data
 
 ## assign height and width of image
-h = dimensions(seq_length)[1]
-w = dimensions(seq_length)[0]
+vals = dimensions(seq)
+h = min(vals[:2])
+w = max(vals[:2])
+if len(vals) == 3:
+    seq = vals[2]
 
 ## create empty array using h and w as dimensions
 data = np.zeros((h,w,3), dtype=np.uint8)
@@ -56,5 +58,5 @@ data = generate(h, w, data)
 
 ## convert array into png image
 img = Image.fromarray(data, 'RGB')
-img.save('img.png')
+img.save('img4.png')
 img.show()
