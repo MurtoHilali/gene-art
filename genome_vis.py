@@ -3,20 +3,19 @@ from PIL import Image
 import math
 
 ## open genome txt file as string 'seq'
-with open(r"~\s_bongori.txt", 'r') as file:
-    seq = file.read().replace('\n','')
+with open(r"h_cinaedi.txt", 'r') as file:
+    seq = file.readlines()[1:]
+    seq = ''.join(seq).replace('\n','')
 
 ##RGB colours for each base
 colours = {
-    "A":[98, 60, 234],
-    "T":[136, 90, 90],
-    "C":[244, 185, 66],
-    "G":[75, 192, 217]
+    "A":[30, 33, 43],
+    "T":[234, 99, 140],
+    "C":[179, 60, 134],
+    "G":[224, 226, 219] 
 }
 
 ## function to return the two closest integer factors of seq_length
-## now if there is a prime number of nucleotides in genome 
-## the last one is dropped to make the new seq
 def dimensions(seq):
     seq_length = len(seq)
     a = int(math.sqrt(seq_length))
