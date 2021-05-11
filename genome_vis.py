@@ -3,16 +3,16 @@ from PIL import Image
 import math
 
 ## open genome txt file as string 'seq'
-with open(r"h_cinaedi.txt", 'r') as file:
+with open(r"C:\Users\hilal\Desktop\Murto_Hilali\Projects\gene-art\h_cinaedi.txt", 'r') as file:
     seq = file.readlines()[1:]
     seq = ''.join(seq).replace('\n','')
 
 ##RGB colours for each base
 colours = {
-    "A":[30, 33, 43],
-    "T":[234, 99, 140],
-    "C":[179, 60, 134],
-    "G":[224, 226, 219] 
+    "A":[98, 60, 234],
+    "T":[136, 90, 90],
+    "C":[244, 185, 66],
+    "G":[75, 192, 217]
 }
 
 ## function to return the two closest integer factors of seq_length
@@ -28,18 +28,11 @@ def dimensions(seq):
         vals = [a, int(seq_length / a)]
         return vals
 
-
-## generates array with dimensions from dimensions() containing RGB values from colours {}
+## generates array with dimensions from dimensions() containing RGB values from colour {}
 def generate(h, w, data):
-    for k in range(w):
-        data[0,k] = colours[seq[k]]
-        data[1,k] = colours[seq[k+w]]
-    for i in range(2, h):
+    for i in range(h):
         for j in range(w):
-            if j == 0:
-                data[i,j] = colours[seq[i*w]]
-            else:
-                data[i,j] = colours[seq[i*j]]
+            data[i,j] = colours[seq[j+i*w]]
     return data
 
 ## assign height and width of image
@@ -57,5 +50,5 @@ data = generate(h, w, data)
 
 ## convert array into png image
 img = Image.fromarray(data, 'RGB')
-img.save('img4.png')
+img.save('e_coli_new.png')
 img.show()
