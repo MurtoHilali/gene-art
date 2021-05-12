@@ -3,7 +3,7 @@ from PIL import Image
 import math
 
 ## open genome txt file as string 'seq'
-with open(r"C:\Users\hilal\Desktop\Murto_Hilali\Projects\gene-art\h_cinaedi.txt", 'r') as file:
+with open(r"h_cinaedi.txt", 'r') as file:
     seq = file.readlines()[1:]
     seq = ''.join(seq).replace('\n','')
 
