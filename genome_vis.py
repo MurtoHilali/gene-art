@@ -49,5 +49,5 @@ data = generate(h, w, data)
 
 ## convert array into png image
 img = Image.fromarray(data, 'RGB')
-img.save('c_l_familiaris_c38_test_3.png')
+img.save('c_l_familiaris_c38.png')
 img.show()
